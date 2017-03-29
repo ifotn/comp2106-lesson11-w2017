@@ -13,28 +13,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Created by RFreeman on 3/29/2017.
  */
 var core_1 = require("@angular/core");
-var game_service_1 = require("../services/game.service");
-var GameComponent = (function () {
-    function GameComponent(gameService) {
-        this.gameService = gameService;
-        this.getGames();
+var http_1 = require("@angular/http");
+require("rxjs/add/operator/map");
+var GameService = (function () {
+    // when an instance of this class is created
+    function GameService(http) {
+        this.http = http;
     }
-    // get games
-    GameComponent.prototype.getGames = function () {
-        var _this = this;
-        this.gameService.getGames().subscribe(function (response) {
-            _this.games = response;
-        });
+    // get Games
+    GameService.prototype.getGames = function () {
+        return this.http.get('/api').map(function (response) { return response.json(); });
     };
-    return GameComponent;
+    return GameService;
 }());
-GameComponent = __decorate([
-    core_1.Component({
-        selector: 'game',
-        templateUrl: '/app/views/game.html',
-        providers: [game_service_1.GameService]
-    }),
-    __metadata("design:paramtypes", [game_service_1.GameService])
-], GameComponent);
-exports.GameComponent = GameComponent;
-//# sourceMappingURL=game.component.js.map
+GameService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http])
+], GameService);
+exports.GameService = GameService;
+//# sourceMappingURL=game.service.js.map

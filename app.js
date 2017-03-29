@@ -13,6 +13,7 @@ mongoose.connect(config.db);
 
 var index = require('./server/controllers/index');
 var users = require('./server/controllers/users');
+let api = require('./server/controllers/api');
 
 var app = express();
 
@@ -31,5 +32,6 @@ app.use(express.static(path.join(__dirname, 'client')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/api', api);
 
 module.exports = app;
